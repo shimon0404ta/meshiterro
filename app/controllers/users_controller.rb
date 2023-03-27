@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    @post_images = @user.post_images
+    @post_images = @user.post_images.page(params[:page])
+    #kaminariで@user.post_images => post_images.page(params[:page])に変更
+    #１ページに決められた数の情報だけを新しい順に取得するよう変更
   end
 
   def edit
@@ -13,12 +15,12 @@ class UsersController < ApplicationController
     @user.update(user_params)
     redirect_to user_path(@user)
   end
-  
-  
+
+
   private
-  
+
   def user_params
     params.require(:user).permit(:name, :profile_image)
   end
-  
+
 end

@@ -8,14 +8,16 @@ class PostImagesController < ApplicationController
     @post_image = PostImage.new(post_image_params)
     @post_image.user_id = current_user.id
     if @post_image.save
-    redirect_to post_images_path
+     redirect_to post_images_path
     else
       render :new
     end
   end
 
   def index
-    @post_images = PostImage.all
+    @post_images = PostImage.page(params[:page])
+    #kaminariでPostImage.all => PostImage.page(params[:page])に変更
+    #１ページに決められた数の情報だけを新しい順に取得するよう変更
   end
 
   def show
